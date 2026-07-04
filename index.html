@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mahi Pawar — UI/UX Designer</title>
+<meta name="description" content="Mahi Pawar — UI/UX Designer portfolio. UX Research, Wireframing, Prototyping, Design Systems." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#0A0A0C',
+          bgalt: '#161619',
+          yellow: '#7DD3FC',
+          coral: '#3B82F6',
+          ink: '#E6EDF7',
+          muted: '#8896B0',
+          line: 'rgba(230,237,247,0.10)',
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#0A0A0C; }
+  ::selection { background:#7DD3FC; color:#0A0A0C; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* grain overlay */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:999; opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* soft ambient glow behind photo — layered blue gradient, more depth */
+  .hero-glow{
+    border-radius: 50% 50% 48% 52% / 55% 55% 45% 45%;
+    background: linear-gradient(160deg, #22D3EE 0%, #3B82F6 55%, #6366F1 100%);
+    filter: blur(38px);
+    opacity: 0.45;
+    animation: blobMove 8s ease-in-out infinite;
+  }
+  @keyframes blobMove{
+    0%,100%{ border-radius: 50% 50% 48% 52% / 55% 55% 45% 45%; transform: rotate(0deg) scale(1); }
+    50%{ border-radius: 45% 55% 60% 40% / 45% 40% 60% 55%; transform: rotate(6deg) scale(1.03); }
+  }
+
+  /* gradient text for hero highlight word */
+  .grad-text{
+    background: linear-gradient(90deg, #22D3EE 0%, #7DD3FC 50%, #6366F1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* gradient CTA buttons */
+  .grad-btn{
+    background: linear-gradient(90deg, #22D3EE 0%, #3B82F6 100%);
+    color: #0A0A0C;
+    box-shadow: 0 8px 24px -8px rgba(59,130,246,0.55);
+  }
+  .grad-btn:hover{
+    background: linear-gradient(90deg, #3B82F6 0%, #6366F1 100%);
+    box-shadow: 0 10px 30px -6px rgba(99,102,241,0.6);
+  }
+
+  .float-tag{ animation: floatTag 5s ease-in-out infinite; }
+  .float-tag.delay-1{ animation-delay: 1s; }
+  .float-tag.delay-2{ animation-delay: 2s; }
+  @keyframes floatTag{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
+
+  /* marquee */
+  .marquee-track{ animation: scroll 28s linear infinite; width: max-content; }
+  @keyframes scroll{ from{ transform: translateX(0);} to{ transform: translateX(-50%);} }
+
+  /* photo cutout placeholder toggle */
+  .photo-cutout img{ display:block; }
+  .photo-cutout.is-empty img{ display:none; }
+  .photo-cutout .placeholder{ display:none; }
+  .photo-cutout.is-empty .placeholder{ display:flex; }
+
+  .reveal{ opacity:0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform: translateY(0); }
+
+  .timeline-dot::before{
+    content:""; position:absolute; left:-39px; top:6px; width:12px; height:12px;
+    background:#7DD3FC; border-radius:50%; box-shadow: 0 0 0 4px #161619;
+  }
+
+  .tag-li::before{ content:"—"; position:absolute; left:0; color:#7DD3FC; }
+
+  .mail-copied::after{ content: "Copied! ✓"; }
+  
+</style>
+</head>
+
+<body class="bg-bg text-ink font-body antialiased overflow-x-hidden">
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-[100] flex items-center justify-between px-6 md:px-8 py-5 backdrop-blur-md bg-bg/70 border-b border-line">
+  <a href="#top" class="font-display font-bold text-lg tracking-tight">mahi<span class="text-coral">.</span>pawar</a>
+
+  <nav id="navLinks" class="hidden md:flex items-center gap-9 text-[15px] fixed md:static inset-x-4 top-[68px] md:inset-auto flex-col md:flex-row items-start md:items-center bg-bgalt md:bg-transparent border md:border-0 border-line rounded-2xl p-5 md:p-0 gap-4 md:gap-9">
+    <a href="#work" class="text-muted hover:text-ink transition-colors">Work</a>
+    <a href="#experience" class="text-muted hover:text-ink transition-colors">Experience</a>
+    <a href="#about" class="text-muted hover:text-ink transition-colors">About</a>
+    <a href="#contact" class="grad-btn font-semibold px-4 py-2 rounded-full transition-colors">Say hi</a>
+  </nav>
+
+  <button id="navToggle" aria-label="Toggle menu" class="md:hidden flex flex-col gap-[5px] p-2">
+    <span class="w-[22px] h-[2px] bg-ink rounded"></span>
+    <span class="w-[22px] h-[2px] bg-ink rounded"></span>
+    <span class="w-[22px] h-[2px] bg-ink rounded"></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section id="top" class="relative max-w-[1180px] mx-auto px-6 md:px-8 pt-2 md:pt-6 pb-14 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-6 md:gap-10 items-center min-h-[auto] md:min-h-[78vh]">
+  <div class="absolute -top-[10%] -left-[10%] w-[520px] h-[520px] rounded-full pointer-events-none"
+       style="background: radial-gradient(circle at 30% 30%, rgba(125,211,252,0.16), transparent 70%);"></div>
+
+  <div class="relative z-[2] text-center md:text-left order-2 md:order-1">
+    <p class="font-display uppercase tracking-[0.14em] text-[13px] text-muted mb-5">UI/UX Designer · Pune, India</p>
+    <h1 class="font-display font-bold tracking-tight text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] leading-[1.08]">
+      Mahi Pawar<br>
+      Designing Digital Products <br>
+      That Solve Real  <span class="grad-text">User Problems.</span>
+    </h1>
+    <p class="mt-6 text-muted text-[17px] max-w-[480px] mx-auto md:mx-0">
+     I design user-centered web and mobile experiences that simplify complex workflows. From user research and wireframes to polished interfaces, I build products that are intuitive, accessible, and ready for development.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 mt-10 justify-center md:justify-start">
+      <a href="#contact" class="grad-btn inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-full hover:-translate-y-0.5 transition-all">Let's work together</a>
+      <a href="#work" class="inline-flex items-center justify-center gap-2 border border-line px-7 py-3.5 rounded-full font-semibold hover:border-yellow hover:text-yellow hover:-translate-y-0.5 transition-all">See my work ↓</a>
+    </div>
+  </div>
+
+  <div class="relative z-[2] flex items-start justify-center min-h-[460px] md:min-h-[560px] order-1 md:order-2 -mt-2 md:mt-0">
+    <div class="hero-glow absolute w-[280px] h-[360px] sm:w-[380px] sm:h-[480px] z-0"></div>
+
+    <div id="photoCutout" class="photo-cutout is-empty relative z-[1] w-[340px] h-[460px] sm:w-[460px] sm:h-[600px] flex items-end justify-center overflow-hidden rounded-[28px]">
+      <!-- 👇 Replace this src with your own transparent cutout PNG -->
+      <img src="cutout mahi.png" alt="Mahi Pawar" class="w-full h-full object-cover object-top"
+           onerror="this.closest('.photo-cutout').classList.add('is-empty')"
+           onload="this.closest('.photo-cutout').classList.remove('is-empty')">
+      <div class="placeholder flex-col items-center justify-center gap-2 w-full h-full text-center text-bg bg-black/5">
+        <span class="text-4xl">📸</span>
+        <p class="text-[13px] font-semibold px-4">Drop your photo at <code class="font-mono text-bg/80">assets/mahi-photo.png</code></p>
+      </div>
+    </div>
+
+    <div class="float-tag hidden sm:block absolute top-[2%] right-[2%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">Figma</div>
+    <div class="float-tag delay-1 hidden sm:block absolute top-[26%] -left-[6%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">User Research</div>
+    <div class="float-tag delay-2 hidden sm:block absolute top-[50%] right-[-4%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">Wireframing</div>
+    <div class="float-tag hidden sm:block absolute bottom-[16%] -left-[10%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">Design Systems</div>
+    <div class="float-tag delay-1 hidden sm:block absolute bottom-[2%] right-[4%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">Prototyping</div>
+        <div class="float-tag delay-1 hidden sm:block absolute bottom-[2%] right-[4%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">Ai Assisted Design</div>
+    <div class="float-tag delay-1 hidden sm:block absolute bottom-[2%] right-[4%] font-display text-[13px] font-semibold bg-bgalt border border-line px-4 py-2 rounded-full z-[3]">Usability Testing</div>
+
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="border-y border-line overflow-hidden py-4 bg-bgalt">
+  <div class="marquee-track flex gap-7 whitespace-nowrap font-display text-[15px] text-muted">
+    <span>UX Research</span><span class="text-yellow">•</span><span>Wireframing</span><span class="text-yellow">•</span>
+    <span>Prototyping</span><span class="text-yellow">•</span><span>Design Systems</span><span class="text-yellow">•</span>
+    <span>Accessibility</span><span class="text-yellow">•</span><span>Figma</span><span class="text-yellow">•</span>
+    <span>User Flows</span><span class="text-yellow">•</span><span>Usability Testing</span><span class="text-yellow">•</span>
+    <span>UX Research</span><span class="text-yellow">•</span><span>Wireframing</span><span class="text-yellow">•</span>
+    <span>Prototyping</span><span class="text-yellow">•</span><span>Design Systems</span><span class="text-yellow">•</span>
+    <span>Accessibility</span><span class="text-yellow">•</span><span>Figma</span><span class="text-yellow">•</span>
+    <span>User Flows</span><span class="text-yellow">•</span><span>Usability Testing</span><span class="text-yellow">•</span>
+  </div>
+</div>
+
+<!-- WORK / PROJECTS -->
+<section id="work" class="max-w-[1180px] mx-auto px-6 md:px-8 py-24 md:py-32">
+  <div class="mb-14 md:mb-16">
+    <p class="font-display uppercase tracking-[0.14em] text-[13px] text-coral font-semibold mb-4">01 — Selected work</p>
+    <h2 class="font-display font-semibold text-[28px] sm:text-[36px] md:text-[44px] leading-[1.15] max-w-[760px]">Projects built end-to-end,<br>from research to UI screens.</h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
+
+    <article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-yellow">
+      
+      <div class="relative h-[360px] p-5 overflow-hidden bg-bg">
+        <img src="Intro Page.png" alt="Meditation Centre App" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        
+        <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+        <span class="relative z-[1] font-display text-[12px] font-semibold grad-btn px-3.5 py-1.5 rounded-full shadow-lg">Featured</span>
+      </div>
+
+      <div class="p-6 md:p-7">
+        <h3 class="font-display text-[21px] mb-2.5">Meditation Centre Discovery &amp; Booking Platform</h3>
+        <p class="text-muted text-[14.5px] mb-4">An end-to-end platform for discovering, comparing and booking trusted meditation centres across India.</p>
+        <ul class="flex flex-wrap gap-2">
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">UX Research</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Personas</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Journey Mapping</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Design System</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-coral">
+      
+      <div class="relative h-[360px] p-5 overflow-hidden bg-bg">
+        <img src="intro page trueneighbour.png" alt="Society Management App" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        
+        <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+        <span class="relative z-[1] font-display text-[12px] font-semibold text-bg px-3.5 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(90deg,#3B82F6,#6366F1);">Case study</span>
+      </div>
+
+      <div class="p-6 md:p-7">
+        <h3 class="font-display text-[21px] mb-2.5">Society Management Application</h3>
+        <p class="text-muted text-[14.5px] mb-4">Responsive wireframes, prototypes and high-fidelity UI for managing day-to-day society operations.</p>
+        <ul class="flex flex-wrap gap-2">
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Wireframing</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Prototyping</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">High-Fidelity UI</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Design System</li>
+        </ul>
+      </div>
+    </article>
+<article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-coral">
+      
+      <div class="relative h-[360px] p-5 overflow-hidden bg-bg">
+        <img src="intro page hospital management.png" alt="Society Management App" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        
+        <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+        <span class="relative z-[1] font-display text-[12px] font-semibold text-bg px-3.5 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(90deg,#3B82F6,#6366F1);">Case study</span>
+      </div>
+
+      <div class="p-6 md:p-7">
+        <h3 class="font-display text-[21px] mb-2.5">Health Care Management System</h3>
+        <p class="text-muted text-[14.5px] mb-4">Designed FrontEnd and BackEnd interface for doctor and Patient Portals with responsive appointment booking and also AI Integration</p>
+        <ul class="flex flex-wrap gap-2">
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Html</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Tailwind CSS</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">JavaScript</li>
+          <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Python(Flask)</li>
+        </ul>
+      </div>
+    </article>
+
+    
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="bg-bgalt">
+  <div class="max-w-[1180px] mx-auto px-6 md:px-8 py-24 md:py-32">
+    <div class="mb-14 md:mb-16">
+      <p class="font-display uppercase tracking-[0.14em] text-[13px] text-coral font-semibold mb-4">02 — Experience</p>
+      <h2 class="font-display font-semibold text-[28px] sm:text-[36px] md:text-[44px] leading-[1.15] max-w-[760px]">Where I've put the craft to work.</h2>
+    </div>
+
+    <div class="border-l-2 border-line pl-8 mb-16">
+      <div class="reveal relative timeline-dot">
+        <div class="font-display text-coral text-[14px] font-semibold mb-2.5">Feb 2026 — Jun 2026</div>
+        <h3 class="font-display text-[22px] mb-3.5">UI/UX Design Intern <span class="text-muted font-normal text-[16px]">· Maestro Intellect</span></h3>
+        <ul class="space-y-2">
+          <li class="tag-li relative pl-5 text-muted text-[15px]">Conducted usability testing and competitor analysis.</li>
+          <li class="tag-li relative pl-5 text-muted text-[15px]">Designed 60+ responsive screens in Figma.</li>
+          <li class="tag-li relative pl-5 text-muted text-[15px]">Created wireframes, user flows and reusable components.</li>
+          <li class="tag-li relative pl-5 text-muted text-[15px]">Collaborated with developers for implementation.</li>
+          <li class="tag-li relative pl-5 text-muted text-[15px]">Improved design consistency through a scalable design system.</li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="reveal">
+        <h4 class="font-display text-yellow text-[14px] uppercase tracking-[0.08em] mb-3">Tools</h4>
+        <p class="text-muted text-[14.5px]">Figma · Adobe XD · Photoshop · FigJam · Miro</p>
+      </div>
+      <div class="reveal">
+        <h4 class="font-display text-yellow text-[14px] uppercase tracking-[0.08em] mb-3">Process</h4>
+        <p class="text-muted text-[14.5px]">User Research · Personas · Journey Mapping · IA · User Flows · Wireframing · Prototyping · Usability Testing</p>
+      </div>
+      <div class="reveal">
+        <h4 class="font-display text-yellow text-[14px] uppercase tracking-[0.08em] mb-3">Build</h4>
+        <p class="text-muted text-[14.5px]">Design Systems · Responsive Design · Accessibility · HTML5 · CSS3 · JavaScript · Tailwind CSS · Agile</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="max-w-[1180px] mx-auto px-6 md:px-8 py-24 md:py-32">
+  <div class="reveal max-w-[760px]">
+    <p class="font-display uppercase tracking-[0.14em] text-[13px] text-coral font-semibold mb-4">03 — About</p>
+    <h2 class="font-display font-semibold text-[28px] sm:text-[36px] md:text-[44px] leading-[1.15] mb-6">A little about my approach.</h2>
+    <p class="text-muted text-[16px] max-w-[640px] mb-10">
+   I am a UXUI Designer that enjoy designing products that solve meaningful problems in healthcare, wellness and community platforms. My process combines user research, information architecture and visual design to create experiences that are intuitive, scalable and development-ready.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 mb-10">
+      <div>
+        <h4 class="font-display text-coral text-[14px] uppercase tracking-[0.06em] mb-2">Education</h4>
+        <p class="text-[15px]">BBA (Computer Applications)<br>Savitribai Phule Pune University (year July 2023-July 2026)</p>
+      </div>
+      <div>
+        <h4 class="font-display text-coral text-[14px] uppercase tracking-[0.06em] mb-2">Certification</h4>
+        <p class="text-[15px]">UI/UX Design Certification<br>UI/UX Design School</p>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-display text-coral text-[14px] uppercase tracking-[0.06em] mb-2">Soft skills</h4>
+      <p class="text-muted text-[14.5px]">Professional Communication · Stakeholder Collaboration · Cross-Functional Teamwork · Problem Solving · Attention to Detail · Empathy · Time Management · Presentation Skills</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="max-w-[1180px] mx-auto px-6 md:px-8 py-28 md:py-36 text-center">
+  <div class="inline-block font-display text-yellow bg-bgalt border border-line px-5 py-2.5 rounded-full mb-6 tracking-[0.2em]">•••</div>
+  <h2 class="font-display font-bold text-[34px] sm:text-[46px] md:text-[64px] leading-[1.08] mb-6">Let's build something<br>meaningful.</h2>
+  <p class="text-muted max-w-[560px] mx-auto mb-12 text-[16px]">
+    Have an idea, an opportunity, or a project in mind? I'm always excited
+    to collaborate, learn, and create experiences that make a real impact.
+  </p>
+  <!-- Availability -->
+<div class="availability-section">
+    <p class="availability-title">Available for</p>
+
+    <div class="availability-tags">
+        <span class="availability-tag">
+            <i class="fa-solid fa-circle-check"></i>
+            Full-time
+        </span>
+
+        <span class="availability-tag">
+            <i class="fa-solid fa-circle-check"></i>
+            Internship
+        </span>
+
+        <span class="availability-tag">
+            <i class="fa-solid fa-circle-check"></i>
+            Freelance
+        </span>
+    </div>
+</div>
+
+  <div class="flex flex-col items-center gap-1.5 mb-10">
+    <button id="emailBtn" data-email="pawarmahi283@gmail.com"
+      class="font-display text-[20px] sm:text-[26px] md:text-[30px] font-semibold text-yellow border-b-2 border-dashed border-yellow pb-1.5 hover:text-coral hover:border-coral transition-colors cursor-pointer bg-transparent">
+      pawarmahi283@gmail.com
+    </button>
+    <span id="emailHint" class="text-[13px] text-muted">click to copy</span>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
+    <a href="tel:+919923026215" class="inline-flex items-center justify-center border border-line px-7 py-3.5 rounded-full font-semibold hover:border-yellow hover:text-yellow transition-all">+91 99230 26215</a>
+    <a href="https://www.linkedin.com/in/mahi-pawar-6265822a6/" class="inline-flex items-center justify-center border border-line px-7 py-3.5 rounded-full font-semibold hover:border-yellow hover:text-yellow transition-all">LinkedIn</a>
+    <a href="https://www.behance.net/mahipawar07" class="inline-flex items-center justify-center border border-line px-7 py-3.5 rounded-full font-semibold hover:border-yellow hover:text-yellow transition-all">Behance</a>
+  </div>
+</section>
+
+<footer class="text-center py-8 text-muted text-[13px] border-t border-line">
+  <p>Open to UI/UX Opportunities&amp;
+
+Available Worldwide
+
+Let's build products people love. <span id="year"></span></p>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('hidden');
+    navLinks.classList.toggle('flex');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 768) {
+        navLinks.classList.add('hidden');
+        navLinks.classList.remove('flex');
+      }
+    });
+  });
+
+  // Copy email to clipboard on click
+  const emailBtn = document.getElementById('emailBtn');
+  const emailHint = document.getElementById('emailHint');
+  emailBtn.addEventListener('click', async () => {
+    const email = emailBtn.dataset.email;
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch (err) {
+      // Fallback for older browsers / non-secure contexts
+      const temp = document.createElement('textarea');
+      temp.value = email;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+    }
+    const original = emailBtn.textContent.trim();
+    const originalHint = emailHint.textContent;
+    emailBtn.textContent = 'Copied to clipboard ✓';
+    emailHint.textContent = 'ready to paste';
+    setTimeout(() => {
+      emailBtn.textContent = original;
+      emailHint.textContent = originalHint;
+    }, 1800);
+  });
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
