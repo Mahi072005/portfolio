@@ -80,6 +80,24 @@
     box-shadow: 0 10px 30px -6px rgba(99,102,241,0.6);
   }
 
+  /* outline btn used for resume / view case study */
+  .outline-btn{
+    border: 1px solid rgba(230,237,247,0.10);
+    transition: all 0.2s ease;
+  }
+  .outline-btn:hover{
+    border-color: #7DD3FC;
+    color: #7DD3FC;
+  }
+  .outline-btn:disabled, .outline-btn.is-disabled{
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .outline-btn.is-disabled:hover{
+    border-color: rgba(230,237,247,0.10);
+    color: inherit;
+  }
+
   .float-tag{ animation: floatTag 5s ease-in-out infinite; }
   .float-tag.delay-1{ animation-delay: 1s; }
   .float-tag.delay-2{ animation-delay: 2s; }
@@ -106,7 +124,35 @@
   .tag-li::before{ content:"—"; position:absolute; left:0; color:#7DD3FC; }
 
   .mail-copied::after{ content: "Copied! ✓"; }
-  
+
+  /* case study modal */
+  #caseStudyModal{
+    position: fixed; inset: 0; z-index: 200; display:none;
+    background: rgba(6,6,7,0.88); backdrop-filter: blur(6px);
+    align-items:flex-start; justify-content:center;
+    padding: 40px 16px; overflow-y:auto;
+  }
+  #caseStudyModal.is-open{ display:flex; }
+  #caseStudyModal .modal-inner{
+    max-width: 900px; width:100%; background:#0E1418; border:1px solid rgba(230,237,247,0.10);
+    border-radius: 20px; overflow:hidden; position:relative;
+  }
+  #caseStudyModal img{ width:100%; display:block; }
+  #caseStudyModal .modal-close{
+    position: sticky; top:12px; margin: 12px 12px 0 auto; display:flex; width:40px; height:40px;
+    align-items:center; justify-content:center; background:#161619; border:1px solid rgba(230,237,247,0.10);
+    border-radius:999px; color:#E6EDF7; cursor:pointer; z-index:2; font-size:18px;
+  }
+
+  /* availability tags (kept from user's markup, styled to match theme) */
+  .availability-section{ margin-bottom: 40px; }
+  .availability-title{ font-size:13px; text-transform:uppercase; letter-spacing:0.14em; color:#8896B0; margin-bottom:14px; font-family:'Space Grotesk',sans-serif; }
+  .availability-tags{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .availability-tag{
+    display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600;
+    border:1px solid rgba(230,237,247,0.10); padding:8px 16px; border-radius:999px; color:#E6EDF7;
+  }
+  .availability-tag i{ color:#7DD3FC; font-size:12px; }
 </style>
 </head>
 
@@ -150,6 +196,18 @@
     <div class="flex flex-col sm:flex-row gap-4 mt-10 justify-center md:justify-start">
       <a href="#contact" class="grad-btn inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-full hover:-translate-y-0.5 transition-all">Let's work together</a>
       <a href="#work" class="inline-flex items-center justify-center gap-2 border border-line px-7 py-3.5 rounded-full font-semibold hover:border-yellow hover:text-yellow hover:-translate-y-0.5 transition-all">See my work ↓</a>
+    </div>
+
+    <!-- RESUME -->
+    <div class="mt-6 flex flex-col sm:flex-row items-center md:items-start gap-3">
+      <a href="assets/mahi-pawar-resume.pdf" target="_blank" rel="noopener"
+         class="outline-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-[14.5px]">
+        📄 View Resume
+      </a>
+      <a href="assets/mahi-pawar-resume.pdf" download="Mahi-Pawar-Resume.pdf"
+         class="outline-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-[14.5px]">
+        ⬇ Download Resume
+      </a>
     </div>
   </div>
 
@@ -202,10 +260,10 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
 
     <article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-yellow">
-      
+
       <div class="relative h-[360px] p-5 overflow-hidden bg-bg">
         <img src="Intro Page.png" alt="Meditation Centre App" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        
+
         <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
         <span class="relative z-[1] font-display text-[12px] font-semibold grad-btn px-3.5 py-1.5 rounded-full shadow-lg">Featured</span>
@@ -214,20 +272,24 @@
       <div class="p-6 md:p-7">
         <h3 class="font-display text-[21px] mb-2.5">Meditation Centre Discovery &amp; Booking Platform</h3>
         <p class="text-muted text-[14.5px] mb-4">An end-to-end platform for discovering, comparing and booking trusted meditation centres across India.</p>
-        <ul class="flex flex-wrap gap-2">
+        <ul class="flex flex-wrap gap-2 mb-5">
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">UX Research</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Personas</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Journey Mapping</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Design System</li>
         </ul>
+        <button class="view-case-study outline-btn is-disabled w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-[13.5px]"
+                data-case-study="" disabled>
+          View Case Study — coming soon
+        </button>
       </div>
     </article>
 
     <article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-coral">
-      
+
       <div class="relative h-[360px] p-5 overflow-hidden bg-bg">
         <img src="intro page trueneighbour.png" alt="Society Management App" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        
+
         <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
         <span class="relative z-[1] font-display text-[12px] font-semibold text-bg px-3.5 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(90deg,#3B82F6,#6366F1);">Case study</span>
@@ -236,19 +298,24 @@
       <div class="p-6 md:p-7">
         <h3 class="font-display text-[21px] mb-2.5">Society Management Application</h3>
         <p class="text-muted text-[14.5px] mb-4">Responsive wireframes, prototypes and high-fidelity UI for managing day-to-day society operations.</p>
-        <ul class="flex flex-wrap gap-2">
+        <ul class="flex flex-wrap gap-2 mb-5">
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Wireframing</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Prototyping</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">High-Fidelity UI</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Design System</li>
         </ul>
+        <button class="view-case-study outline-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-[13.5px]"
+                data-case-study="assets/case-studies/true-neighbour-case-study.png">
+          🔍 View Case Study
+        </button>
       </div>
     </article>
-<article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-coral">
-      
+
+    <article class="reveal group bg-bgalt border border-line rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-coral">
+
       <div class="relative h-[360px] p-5 overflow-hidden bg-bg">
-        <img src="intro page hospital management.png" alt="Society Management App" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        
+        <img src="intro page hospital management.png" alt="Health Care Management System" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+
         <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
         <span class="relative z-[1] font-display text-[12px] font-semibold text-bg px-3.5 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(90deg,#3B82F6,#6366F1);">Case study</span>
@@ -257,18 +324,30 @@
       <div class="p-6 md:p-7">
         <h3 class="font-display text-[21px] mb-2.5">Health Care Management System</h3>
         <p class="text-muted text-[14.5px] mb-4">Designed FrontEnd and BackEnd interface for doctor and Patient Portals with responsive appointment booking and also AI Integration</p>
-        <ul class="flex flex-wrap gap-2">
+        <ul class="flex flex-wrap gap-2 mb-5">
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Html</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Tailwind CSS</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">JavaScript</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Python(Flask)</li>
         </ul>
+        <button class="view-case-study outline-btn is-disabled w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-[13.5px]"
+                data-case-study="" disabled>
+          View Case Study — coming soon
+        </button>
       </div>
     </article>
 
-    
+
   </div>
 </section>
+
+<!-- CASE STUDY MODAL -->
+<div id="caseStudyModal">
+  <div class="modal-inner">
+    <button class="modal-close" id="caseStudyClose" aria-label="Close case study">✕</button>
+    <img id="caseStudyImg" src="" alt="Case study">
+  </div>
+</div>
 
 <!-- EXPERIENCE -->
 <section id="experience" class="bg-bgalt">
@@ -445,6 +524,33 @@ Let's build products people love. <span id="year"></span></p>
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
+
+  // Case study modal
+  const caseStudyModal = document.getElementById('caseStudyModal');
+  const caseStudyImg = document.getElementById('caseStudyImg');
+  const caseStudyClose = document.getElementById('caseStudyClose');
+
+  document.querySelectorAll('.view-case-study').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const src = btn.dataset.caseStudy;
+      if (!src) return; // disabled / coming soon buttons do nothing
+      caseStudyImg.src = src;
+      caseStudyModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeCaseStudy(){
+    caseStudyModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  caseStudyClose.addEventListener('click', closeCaseStudy);
+  caseStudyModal.addEventListener('click', (e) => {
+    if (e.target === caseStudyModal) closeCaseStudy();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCaseStudy();
+  });
 </script>
 
 </body>
