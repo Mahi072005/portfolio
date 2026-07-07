@@ -98,6 +98,51 @@
     color: inherit;
   }
 
+  /* combined resume split-button */
+  .resume-pill{
+    display:inline-flex;
+    align-items:stretch;
+    border:1px solid rgba(230,237,247,0.14);
+    border-radius: 999px;
+    overflow:hidden;
+    background: rgba(230,237,247,0.03);
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .resume-pill:hover{
+    border-color: rgba(125,211,252,0.5);
+    background: rgba(125,211,252,0.05);
+  }
+  .resume-pill-main{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding: 13px 22px 13px 24px;
+    font-weight:600;
+    font-size:14.5px;
+    color:#E6EDF7;
+    transition: color .2s ease;
+  }
+  .resume-pill:hover .resume-pill-main{ color:#7DD3FC; }
+  .resume-pill-divider{
+    width:1px;
+    background: rgba(230,237,247,0.14);
+    align-self: stretch;
+    margin: 8px 0;
+  }
+  .resume-pill-download{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 0 18px;
+    color:#8896B0;
+    transition: color .2s ease, background .2s ease;
+  }
+  .resume-pill-download:hover{
+    color:#7DD3FC;
+    background: rgba(125,211,252,0.08);
+  }
+  .resume-pill-download svg{ width:16px; height:16px; }
+
   .float-tag{ animation: floatTag 5s ease-in-out infinite; }
   .float-tag.delay-1{ animation-delay: 1s; }
   .float-tag.delay-2{ animation-delay: 2s; }
@@ -199,15 +244,17 @@
     </div>
 
     <!-- RESUME -->
-    <div class="mt-6 flex flex-col sm:flex-row items-center md:items-start gap-3">
-      <a href="mahi-pawar-resume.pdf" target="_blank" rel="noopener"
-         class="outline-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-[14.5px]">
-        📄 View Resume
-      </a>
-      <a href="mahi-pawar-resume.pdf" download="Mahi-Pawar-Resume.pdf"
-         class="outline-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-[14.5px]">
-        ⬇ Download Resume
-      </a>
+    <div class="mt-6 flex justify-center md:justify-start">
+      <div class="resume-pill">
+        <a href="mahi-pawar-resume.pdf" target="_blank" rel="noopener" class="resume-pill-main">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          View Resume
+        </a>
+        <span class="resume-pill-divider"></span>
+        <a href="mahi-pawar-resume.pdf" download="Mahi-Pawar-Resume.pdf" class="resume-pill-download" aria-label="Download resume" title="Download resume">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -305,7 +352,7 @@
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Design System</li>
         </ul>
         <button class="view-case-study outline-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-[13.5px]"
-                data-case-study="assets/case-studies/true-neighbour-case-study.png">
+                data-case-study="true-neighbour-case-study.png">
           🔍 View Case Study
         </button>
       </div>
