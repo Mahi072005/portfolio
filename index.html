@@ -351,10 +351,11 @@
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">High-Fidelity UI</li>
           <li class="text-[12.5px] border border-line px-3 py-1 rounded-full text-muted">Design System</li>
         </ul>
-        <button class="view-case-study outline-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-[13.5px]"
-                data-case-study="true-neighbour-case-study.png">
+        <a href="https://www.behance.net/gallery/252625329/Community-Management-Platform-UXUI-Case-Study"
+           target="_blank" rel="noopener noreferrer"
+           class="outline-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-[13.5px]">
           🔍 View Case Study
-        </button>
+        </a>
       </div>
     </article>
 
@@ -572,7 +573,7 @@ Let's build products people love. <span id="year"></span></p>
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
 
-  // Case study modal
+  // Case study modal (used for any future buttons with a valid data-case-study image)
   const caseStudyModal = document.getElementById('caseStudyModal');
   const caseStudyImg = document.getElementById('caseStudyImg');
   const caseStudyClose = document.getElementById('caseStudyClose');
